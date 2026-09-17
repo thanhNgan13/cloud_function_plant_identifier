@@ -18,14 +18,14 @@ Request và response giữ nguyên format của bản cloud function. Chi tiết
 ```bash
 cp .env.example .env      # điền GEMINI_API_KEY
 npm install
-npm run dev               # http://localhost:8080
+npm run dev               # http://localhost:8188
 ```
 
 Test nhanh:
 
 ```bash
-curl http://localhost:8080/v1/personal-color-service/languages
-curl -X POST http://localhost:8080/v1/personal-color-service/analyze \
+curl http://localhost:8188/v1/personal-color-service/languages
+curl -X POST http://localhost:8188/v1/personal-color-service/analyze \
   -F "file=@face.jpg" -F "language=vi"
 ```
 
@@ -56,10 +56,10 @@ cp .env.example .env
 nano .env                       # GEMINI_API_KEY, API_KEY, CORS_ORIGINS, PUBLIC_URL...
 docker compose up -d --build
 docker compose logs -f
-curl http://127.0.0.1:8080/health
+curl http://127.0.0.1:8188/health
 ```
 
-Mặc định container chỉ bind vào `127.0.0.1:8080`, nên từ bên ngoài không truy cập trực tiếp được. Nên đặt Nginx hoặc Caddy phía trước để có HTTPS (bước 4). Nếu muốn mở thẳng port ra ngoài, sửa `ports` trong `docker-compose.yml` thành `"8080:8080"`.
+Container bind vào `0.0.0.0:8188`, truy cập trực tiếp qua `http://<IP_VPS>:8188`. Nhớ mở cổng `8188/tcp` trên firewall của VPS (`sudo ufw allow 8188/tcp`) và trong firewall/security group của nhà cung cấp. Khi dùng thật, nên đặt Nginx hoặc Caddy phía trước để có HTTPS (bước 4) và đổi `ports` trong `docker-compose.yml` thành `"127.0.0.1:8188:8188"` để không lộ cổng HTTP.
 
 ### 4. HTTPS với Nginx và Let's Encrypt
 
@@ -77,7 +77,7 @@ server {
     client_max_body_size 12m;          # >= MAX_FILE_SIZE_MB
 
     location / {
-        proxy_pass http://127.0.0.1:8080;
+        proxy_pass http://127.0.0.1:8188;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -107,8 +107,8 @@ docker image prune -f
 | Biến | Mặc định | Ghi chú |
 |---|---|---|
 | `GEMINI_API_KEY` | (bắt buộc) | |
-| `PORT` | `8080` | Port bên trong container |
-| `HOST_PORT` | `8080` | Port trên VPS, dùng trong docker-compose |
+| `PORT` | `8188` | Port bên trong container |
+| `HOST_PORT` | `8188` | Port trên VPS, dùng trong docker-compose |
 | `GEMINI_ANALYSIS_MODEL` | `gemini-2.5-pro` | Model phân tích ảnh |
 | `GEMINI_TRANSLATION_MODEL` | `gemini-2.5-flash` | Model dịch kết quả |
 | `GEMINI_TIMEOUT_MS` | `120000` | |

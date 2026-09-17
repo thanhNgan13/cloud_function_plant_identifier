@@ -160,7 +160,7 @@ Personal color analysis (also known as color typing or seasonal color analysis) 
 **cURL:**
 
 ```bash
-curl -X POST http://localhost:8080/v1/personal-color-service/analyze \
+curl -X POST http://localhost:8188/v1/personal-color-service/analyze \
   -F "file=@/path/to/face_image.jpg" \
   -F "language=en"
 ```
@@ -170,7 +170,7 @@ curl -X POST http://localhost:8080/v1/personal-color-service/analyze \
 ```python
 import requests
 
-url = 'http://localhost:8080/v1/personal-color-service/analyze'
+url = 'http://localhost:8188/v1/personal-color-service/analyze'
 files = {'file': open('face_image.jpg', 'rb')}
 data = {'language': 'en'}
 
@@ -278,7 +278,7 @@ No request body required.
 **cURL:**
 
 ```bash
-curl http://localhost:8080/v1/personal-color-service/languages
+curl http://localhost:8188/v1/personal-color-service/languages
 ```
 
 **JavaScript (fetch):**

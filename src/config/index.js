@@ -7,7 +7,7 @@ const toInt = (value, fallback) => {
 
 const config = {
   server: {
-    port: toInt(process.env.PORT, 8080),
+    port: toInt(process.env.PORT, 8188),
     env: process.env.NODE_ENV || "development",
     // Số proxy đứng trước app (Nginx/Caddy/Cloudflare) để lấy đúng IP client
     trustProxy: toInt(process.env.TRUST_PROXY, 1),

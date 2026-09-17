@@ -8,11 +8,11 @@ services:
       - .env
     environment:
       NODE_ENV: production
-      PORT: 8080
-    # Chỉ bind localhost; đặt Nginx/Caddy phía trước để có HTTPS.
-    # Nếu muốn mở thẳng ra internet, đổi thành "8080:8080".
+      PORT: 8188
+    # Mở ra mọi IP để truy cập trực tiếp qua IP_VPS:HOST_PORT.
+    # Nếu đặt Nginx/Caddy phía trước, đổi thành "127.0.0.1:${HOST_PORT:-8188}:8188".
     ports:
-      - "127.0.0.1:${HOST_PORT:-8080}:8080"
+      - "${HOST_PORT:-8188}:8188"
     logging:
       driver: json-file
       options:

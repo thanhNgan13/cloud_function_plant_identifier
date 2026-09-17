@@ -1,9 +1,9 @@
 /**
  * Test script for Personal Color Analysis Service
- * Run with: BASE_URL=http://localhost:8080 node scripts/testPersonalColorAPI.js
+ * Run with: BASE_URL=http://localhost:8188 node scripts/testPersonalColorAPI.js
  *
  * Requirements:
- * - Server running on http://localhost:8080
+ * - Server running on http://localhost:8188
  * - Test image file (face image) in current directory or provide path
  */
 
@@ -11,7 +11,7 @@ const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 
-const BASE_URL = `${process.env.BASE_URL || "http://localhost:8080"}/v1/personal-color-service`;
+const BASE_URL = `${process.env.BASE_URL || "http://localhost:8188"}/v1/personal-color-service`;
 
 // Gửi x-api-key cho mọi request nếu server bật API_KEY
 if (process.env.API_KEY) {
@@ -338,7 +338,7 @@ async function runTests() {
     await axios.get(`${BASE_URL}/languages`, { timeout: 3000 });
   } catch (error) {
     console.error(
-      "\n❌ Server not responding. Make sure the server is running on http://localhost:8080\n",
+      "\n❌ Server not responding. Make sure the server is running on http://localhost:8188\n",
     );
     process.exit(1);
   }
