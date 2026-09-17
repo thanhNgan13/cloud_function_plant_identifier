@@ -1,0 +1,20 @@
+services:
+  personal-color-service:
+    build: .
+    image: personal-color-service:latest
+    container_name: personal-color-service
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+    # Chỉ bind localhost; đặt Nginx/Caddy phía trước để có HTTPS.
+    # Nếu muốn mở thẳng ra internet, đổi thành "8080:8080".
+    ports:
+      - "127.0.0.1:${HOST_PORT:-8080}:8080"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
